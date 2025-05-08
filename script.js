@@ -1,0 +1,62 @@
+function getComputerChoice() {
+    function getRandomNumber() {
+        return Math.floor(Math.random() * 10);
+    }
+    let randomNumber = getRandomNumber();
+    if (randomNumber>=0 && randomNumber<3) {
+        return "rock";
+    } else if (randomNumber>=3 && randomNumber<6) {
+        return "paper";
+    }
+    else {
+        return "scissors"
+    }
+}
+
+
+function getHumanChoice() {
+    return prompt("Rock, paper, or scissors?", 'rock');
+}
+
+function playGame () {
+
+    let humanScore = 0, computerScore = 0; 
+
+    function playRound(humanChoice, computerChoice){   
+        
+        humanChoice = String(humanChoice).toLowerCase();
+                    
+        if (humanChoice == 'rock' && computerChoice == 'paper') {
+            computerScore += 1;
+        }
+        else if (humanChoice == 'rock' && computerChoice == 'scissors') {
+            humanScore += 1;
+        }
+        else if (humanChoice == 'paper' && computerChoice == 'rock') {
+            humanScore += 1;
+        }
+        else if (humanChoice == 'paper' && computerChoice == 'scissors') {
+            computerScore += 1;
+        }
+        else if (humanChoice == 'scissors' && computerChoice == 'rock') {
+            computerScore += 1;
+        }
+        else if (humanChoice == 'scissors' && computerChoice == 'paper'){
+            humanScore += 1;
+        }
+        else {
+            humanScore += 0;
+            computerScore += 0;
+        }
+    }
+
+    
+
+    for (let i = 0; i < 5; i++) {
+        playRound(getHumanChoice(), getComputerChoice());
+    }
+
+    console.log(`Computer Score: ${computerScore} \n Your Score: ${humanScore}`);
+}
+
+playGame();
