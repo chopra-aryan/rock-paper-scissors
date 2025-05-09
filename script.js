@@ -1,5 +1,5 @@
 
-let humanScore = 0, computerScore = 0; 
+let humanScore = 0, computerScore = 0, roundsPlayed = 0; 
 
 function getComputerChoice() {
     function getRandomNumber() {
@@ -19,6 +19,10 @@ function getComputerChoice() {
 function playRound(humanChoice, computerChoice){   
         
     humanChoice = String(humanChoice).toLowerCase();
+
+    const computerChoiceElement = document.querySelector('.computer-choice');
+    
+    computerChoiceElement.textContent = `Computer chose ${computerChoice}`;
                 
     if (humanChoice == 'rock' && computerChoice == 'paper') {
         computerScore += 1;
@@ -41,14 +45,38 @@ function playRound(humanChoice, computerChoice){
     else {
         
     }
-
-    console.log("Human Score: " + humanScore);
-    console.log("Computer Score: " + computerScore);
 }
 
 
 function updateUI() {
     document.querySelector('.result').textContent = `Your score: ${humanScore} \n Computer score: ${computerScore}`;
+
+    roundsPlayed++;
+
+    if(roundsPlayed === 3) {
+        if (humanScore > computerScore) {
+            alert('Congratulations, You win!!');
+        }
+        else if (computerScore < humanScore) {
+            alert('Computer wins. Better luck next time!!');
+        }
+        else {
+            alert('Its a draw!!')
+        }
+
+        roundsPlayed = 0;
+        computerScore = 0;
+        humanScore = 0;
+
+        document.querySelector('.computer-choice').textContent = '';
+
+        document.querySelector('.result').textContent = `New Game begins!`;
+
+    }
+
+
+
+
 }
 document.querySelector('.rock').addEventListener('click', () => { 
     playRound('rock', getComputerChoice());
@@ -65,5 +93,3 @@ document.querySelector('.scissors').addEventListener('click', () => {
 });
 
 
-console.log(`${computerScore} 
-    ${humanScore}`);
