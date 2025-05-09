@@ -53,43 +53,57 @@ function updateUI() {
 
     roundsPlayed++;
 
+    let finalResult = document.querySelector('.final-result');
+
     if(roundsPlayed === 3) {
         if (humanScore > computerScore) {
-            alert('Congratulations, You win!!');
+            finalResult.textContent = "Congratulations! You win!!"
         }
         else if (computerScore < humanScore) {
-            alert('Computer wins. Better luck next time!!');
+            finalResult.textContent = 'Computer wins. Better luck next time!!';
         }
         else {
-            alert('Its a draw!!')
+            finalResult.textContent = 'Its a draw!!';
         }
-
-        roundsPlayed = 0;
-        computerScore = 0;
-        humanScore = 0;
 
         document.querySelector('.computer-choice').textContent = '';
 
-        document.querySelector('.result').textContent = `New Game begins!`;
+        if (!document.querySelector('.new-game-button')) {
+            const newGameButton = document.createElement('button');
+            newGameButton.textContent = " New Game";
+            newGameButton.classList.add('new-game-button');
 
+            newGameButton.addEventListener('click', () => {
+                roundsPlayed = 0;
+                computerScore = 0;
+                humanScore = 0;
+
+                document.querySelector('.result').textContent = '';
+                document.querySelector('.final-result').textContent = '';
+                newGameButton.remove();
+            })
+        
+            document.body.appendChild(newGameButton);
+
+        }
     }
-
-
-
-
 }
-document.querySelector('.rock').addEventListener('click', () => { 
-    playRound('rock', getComputerChoice());
-    updateUI();
-});
 
-document.querySelector('.paper').addEventListener('click', () => { 
-    playRound('paper', getComputerChoice());
+
+
+function handlePlayerChoice(choice) {
+    if (roundsPlayed >= 3) {
+        alert("Game over! Click 'New Game' to play again.");
+        return;
+    }
+    playRound(choice, getComputerChoice());
     updateUI();
-});
-document.querySelector('.scissors').addEventListener('click', () => { 
-    playRound('scissors', getComputerChoice());
-    updateUI();
-});
+}
+
+
+
+document.querySelector('.rock').addEventListener('click', () => handlePlayerChoice('rock'));
+document.querySelector('.paper').addEventListener('click', () => handlePlayerChoice('paper'));
+document.querySelector('.scissors').addEventListener('click', () => handlePlayerChoice('scissors'));
 
 
